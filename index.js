@@ -25,6 +25,7 @@ class PollocksCanvas {
     this.createContext();
     this.fillBackground();
     this.colors.forEach(color => {
+      console.log('loop', color)
       this.paint2(color);
     });
   }
@@ -52,21 +53,21 @@ class PollocksCanvas {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  getRandomSmallFloat(rate) {
-    rate = rate || 6;
-    return (Math.random() * rate).toFixed(2);
-  }
+  // getRandomSmallFloat(rate) {
+  //   rate = rate || 6;
+  //   return (Math.random() * rate).toFixed(2);
+  // }
 
-  paint(color) {
-    this.context.beginPath();
-    this.context.strokeStyle = color;
-    this.context.lineTo(this.getRandomBigInt(), this.getRandomBigInt());
-    this.context.lineTo(this.getRandomBigInt(), this.getRandomBigInt());
-    this.context.lineWidth = this.getRandomSmallFloat();
-    this.context.lineCap = 'round';
-    this.context.lineJoin = 'round';
-    this.context.stroke();
-  }
+  // paint(color) {
+  //   this.context.beginPath();
+  //   this.context.strokeStyle = color;
+  //   this.context.lineTo(this.getRandomBigInt(), this.getRandomBigInt());
+  //   this.context.lineTo(this.getRandomBigInt(), this.getRandomBigInt());
+  //   this.context.lineWidth = this.getRandomSmallFloat();
+  //   this.context.lineCap = 'round';
+  //   this.context.lineJoin = 'round';
+  //   this.context.stroke();
+  // }
 
   drawLine() {
     this.context.arc(this.getRandomBigInt(), this.getRandomBigInt(), 5, 0, Math.PI*2, true);
@@ -75,10 +76,14 @@ class PollocksCanvas {
   }
 
   paint2(color) {
+    let counter = 0;
+    console.log('paint', color);
     this.context.beginPath();
     this.context.fillStyle = color;
-    setInterval(()=> {
+    let interval = setInterval(()=> {
+      counter = counter + 1;
       this.drawLine();
+      counter == 20 && clearInterval(interval);
     }, 30)
   }
 }

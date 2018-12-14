@@ -25,7 +25,6 @@ class PollocksCanvas {
     this.createContext();
     this.fillBackground();
     this.colors.forEach(color => {
-      console.log('loop', color)
       this.paint2(color);
     });
   }
@@ -47,9 +46,9 @@ class PollocksCanvas {
     this.context.fillRect(0,0, this.size, this.size);
   }
 
-  getRandomBigInt() {
+  getRandomBigInt(max) {
     const min = 0;
-    const max = this.size;
+    max = max || this.size;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -69,21 +68,22 @@ class PollocksCanvas {
   //   this.context.stroke();
   // }
 
-  drawLine() {
+  drawLine(color) {
+    this.context.beginPath();
     this.context.arc(this.getRandomBigInt(), this.getRandomBigInt(), 5, 0, Math.PI*2, true);
     this.context.closePath();
+    this.context.fillStyle = color;
     this.context.fill();
   }
 
   paint2(color) {
     let counter = 0;
-    console.log('paint', color);
-    this.context.beginPath();
-    this.context.fillStyle = color;
+    let maxCounter = this.getRandomBigInt(100);
+
     let interval = setInterval(()=> {
       counter = counter + 1;
-      this.drawLine();
-      counter == 20 && clearInterval(interval);
-    }, 30)
+      this.drawLine(color);
+      counter == maxCounter && clearInterval(interval);
+    }, 100)
   }
 }
